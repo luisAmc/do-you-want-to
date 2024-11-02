@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expiresAt DateTime @default(now())
+}
+
+model Event {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  creationCode String @default(uuid())
+
+  title    String
+  date     DateTime?
+  hostedBy String?
+  place    String?
+
+  description String?
+}
+
+enum RSVPOptions {
+  GOING
+  MAYBE
+  CANT_GO
+}
+
+model Participant {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name       String
+  rsvpStatus RSVPOptions @default(MAYBE)
+}
