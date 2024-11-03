@@ -1,30 +1,29 @@
 import { RSVPOptions } from "@prisma/client";
-import { ParticipateDrawer, useParticipateDrawer } from "./ParticipateModal";
+import { ParticipateDrawer } from "./ParticipateModal";
 import { OptionButton } from "./OptionButton";
+import { useDrawer } from "../shared/Drawer";
+import { useState } from "react";
 
 export function RSVPButtons() {
-  const participateModal = useParticipateDrawer();
+  const participateDrawer = useDrawer();
+  const [clickedOption, setClickedOption] = useState<RSVPOptions | null>(null);
+
+  function onClick(option: RSVPOptions) {
+    setClickedOption(option);
+    participateDrawer.open();
+  }
 
   return (
     <>
       <div className="flex items-center justify-evenly">
-        <OptionButton
-          variant={RSVPOptions.GOING}
-          onClick={participateModal.open}
-        />
+        <OptionButton variant={RSVPOptions.GOING} onClick={onClick} />
 
-        <OptionButton
-          variant={RSVPOptions.MAYBE}
-          onClick={participateModal.open}
-        />
+        <OptionButton variant={RSVPOptions.MAYBE} onClick={onClick} />
 
-        <OptionButton
-          variant={RSVPOptions.CANT_GO}
-          onClick={participateModal.open}
-        />
+        <OptionButton variant={RSVPOptions.CANT_GO} onClick={onClick} />
       </div>
 
-      <ParticipateDrawer {...participateModal.props} />
+      <ParticipateDrawer option={clickedOption} {...participateDrawer.props} />
     </>
   );
 }

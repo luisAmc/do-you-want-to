@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { RSVPOptions } from "@prisma/client";
 import { Drawer } from "../shared/Drawer";
 import { Form, useZodForm } from "../shared/Form";
@@ -11,36 +10,19 @@ import { LABEL_AND_EMOJI_BY_OPTION } from "./OptionButton";
 import { useFormContext, useWatch } from "react-hook-form";
 import { cn } from "~/utils/cn";
 import { api } from "~/utils/api";
+import { useEffect } from "react";
 
-export function useParticipateDrawer() {
-  const [_option, setOption] = useState<RSVPOptions>(RSVPOptions.MAYBE);
-  const [open, setOpen] = useState(false);
-
-  return {
-    open: (option: RSVPOptions) => {
-      setOption(option);
-      setOpen(true);
-    },
-    props: {
-      option: _option,
-      open,
-      onClose() {
-        setOption(RSVPOptions.MAYBE);
-        setOpen(false);
-      },
-    },
-  };
+interface ParticipateDrawerProps {
+  option: RSVPOptions | null;
+  open: boolean;
+  onClose: () => void;
 }
 
 export function ParticipateDrawer({
   option,
   open,
   onClose,
-}: {
-  option: RSVPOptions;
-  open: boolean;
-  onClose: () => void;
-}) {
+}: ParticipateDrawerProps) {
   const router = useRouter();
 
   const form = useZodForm({
@@ -50,6 +32,14 @@ export function ParticipateDrawer({
       rsvp: option ?? RSVPOptions.MAYBE,
     },
   });
+
+  useEffect(() => {
+    if (!option) {
+      return;
+    }
+
+    form.setValue("rsvp", option);
+  }, [option]);
 
   const queryClient = api.useUtils();
 
