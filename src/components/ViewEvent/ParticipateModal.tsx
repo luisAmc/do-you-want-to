@@ -7,13 +7,13 @@ import { Input } from "../shared/Input";
 import { TextArea } from "../shared/TextArea";
 import { SubmitButton } from "../shared/SubmitButton";
 import { useRouter } from "next/router";
-import { LABEL_AND_EMOJI_BY_OPTION, OptionButton } from "./OptionButton";
+import { LABEL_AND_EMOJI_BY_OPTION } from "./OptionButton";
 import { useFormContext, useWatch } from "react-hook-form";
 import { cn } from "~/utils/cn";
 import { api } from "~/utils/api";
 
 export function useParticipateDrawer() {
-  const [_option, setOption] = useState<RSVPOptions | null>(null);
+  const [_option, setOption] = useState<RSVPOptions>(RSVPOptions.MAYBE);
   const [open, setOpen] = useState(false);
 
   return {
@@ -25,7 +25,7 @@ export function useParticipateDrawer() {
       option: _option,
       open,
       onClose() {
-        setOption(null);
+        setOption(RSVPOptions.MAYBE);
         setOpen(false);
       },
     },
@@ -37,7 +37,7 @@ export function ParticipateDrawer({
   open,
   onClose,
 }: {
-  option: RSVPOptions | null;
+  option: RSVPOptions;
   open: boolean;
   onClose: () => void;
 }) {
@@ -50,10 +50,6 @@ export function ParticipateDrawer({
       rsvp: option ?? RSVPOptions.MAYBE,
     },
   });
-
-  if (!option) {
-    return null;
-  }
 
   const queryClient = api.useUtils();
 

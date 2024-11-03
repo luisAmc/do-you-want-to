@@ -44,13 +44,19 @@ export function ViewEvent(
                 className="w-full max-w-[400px] rounded-md"
               />
             </div>
+
             <h1 className="text-6xl font-semibold text-gray-700 text-pretty">
               {event.title}
             </h1>
+
             <DateAndTime date={event.date} />
+
             <HostedBy hostedBy={event.hostedBy} />
+
             <Place place={event.place} />
+            
             <Description description={event.description} />
+
             {!hasParticipated && (
               <>
                 <div className="py-2 border-b-2  border-palette-blueGreenLight"></div>
@@ -195,9 +201,7 @@ function Description({ description }: { description: string | null }) {
   }
 
   return (
-    <div className="p-2 bg-black/5 rounded-md font-semibold text-pretty">
-      {description}
-    </div>
+    <div className="p-2 rounded-md font-medium text-pretty">{description}</div>
   );
 }
 
