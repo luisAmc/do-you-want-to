@@ -1,16 +1,16 @@
 import { RSVPOptions } from "@prisma/client";
-import { ParticipateDrawer } from "./ParticipateModal";
+import { ParticipateModal } from "./ParticipateModal";
 import { OptionButton } from "./OptionButton";
-import { useDrawer } from "../shared/Drawer";
 import { useState } from "react";
+import { useModal } from "../shared/Modal";
 
 export function RSVPButtons() {
-  const participateDrawer = useDrawer();
+  const participateModal = useModal();
   const [clickedOption, setClickedOption] = useState<RSVPOptions | null>(null);
 
   function onClick(option: RSVPOptions) {
     setClickedOption(option);
-    participateDrawer.open();
+    participateModal.open();
   }
 
   return (
@@ -23,7 +23,7 @@ export function RSVPButtons() {
         <OptionButton variant={RSVPOptions.CANT_GO} onClick={onClick} />
       </div>
 
-      <ParticipateDrawer option={clickedOption} {...participateDrawer.props} />
+      <ParticipateModal option={clickedOption} {...participateModal.props} />
     </>
   );
 }

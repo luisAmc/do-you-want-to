@@ -11,18 +11,19 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { cn } from "~/utils/cn";
 import { api } from "~/utils/api";
 import { useEffect } from "react";
+import { Modal } from "../shared/Modal";
 
-interface ParticipateDrawerProps {
+interface ParticipateModalProps {
   option: RSVPOptions | null;
   open: boolean;
   onClose: () => void;
 }
 
-export function ParticipateDrawer({
+export function ParticipateModal({
   option,
   open,
   onClose,
-}: ParticipateDrawerProps) {
+}: ParticipateModalProps) {
   const router = useRouter();
 
   const form = useZodForm({
@@ -70,7 +71,7 @@ export function ParticipateDrawer({
   }
 
   return (
-    <Drawer title="Mi participación será..." open={open} onClose={onClose}>
+    <Modal title="Mi participación será..." open={open} onClose={onClose}>
       <Form
         form={form}
         className="gap-y-2"
@@ -94,7 +95,7 @@ export function ParticipateDrawer({
 
         <SubmitButton>¡Enviar!</SubmitButton>
       </Form>
-    </Drawer>
+    </Modal>
   );
 }
 

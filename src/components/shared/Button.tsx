@@ -8,10 +8,11 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-palette-blueGreenDark text-palette-ivory hover:bg-opacity-90",
+        default:
+          "bg-palette-blueGreenDark text-palette-ivory hover:bg-opacity-90",
         // secondary: "bg-brand-300 text-brand-900 hover:bg-brand-300/80",
         // destructive: "bg-red-500 text-red-50 hover:bg-red-500/90",
-        // ghost: "bg-transparent hover:bg-brand-200",
+        ghost: "bg-transparent hover:bg-palette-blueGreenDark",
         // outline:
         //   "border border-brand-500 hover:border-brand-300 hover:bg-brand-100",
         // dashed:
