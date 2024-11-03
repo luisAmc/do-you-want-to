@@ -41,11 +41,19 @@ export function ParticipateDrawer({
   open: boolean;
   onClose: () => void;
 }) {
+  const router = useRouter();
+
+  const form = useZodForm({
+    schema: participateSchema,
+    defaultValues: {
+      eventId: router.query.eventId as string,
+      rsvp: option ?? RSVPOptions.MAYBE,
+    },
+  });
+
   if (!option) {
     return null;
   }
-
-  const router = useRouter();
 
   const queryClient = api.useUtils();
 
@@ -62,20 +70,12 @@ export function ParticipateDrawer({
       localStorage.setItem(key, JSON.stringify(participations));
 
       queryClient.event.byId.invalidate();
-      
+
       form.reset();
       onClose();
     },
     onError: (error) => {
       console.log({ error });
-    },
-  });
-
-  const form = useZodForm({
-    schema: participateSchema,
-    defaultValues: {
-      eventId: router.query.eventId as string,
-      rsvp: option,
     },
   });
 
