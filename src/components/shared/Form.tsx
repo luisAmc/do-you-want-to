@@ -22,7 +22,7 @@ export const useZodForm = <T extends ZodSchema<any>>({
 }: UseZodFormProps<T>) => {
   return useForm({
     ...formConfig,
-    mode: "onSubmit",
+    mode: "all",
     resolver: zodResolver(schema),
   });
 };

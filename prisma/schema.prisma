@@ -19,14 +19,16 @@ model Event {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  creationCode String @default(uuid())
+  creationToken String @default(uuid())
 
-  title    String
-  date     DateTime?
-  hostedBy String?
-  place    String?
-
+  imgSrc      String
+  title       String
+  date        DateTime?
+  hostedBy    String?
+  place       String?
   description String?
+
+  participations Participation[]
 }
 
 enum RSVPOptions {
@@ -35,11 +37,15 @@ enum RSVPOptions {
   CANT_GO
 }
 
-model Participant {
+model Participation {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name       String
-  rsvpStatus RSVPOptions @default(MAYBE)
+  name    String
+  rsvp    RSVPOptions @default(MAYBE)
+  comment String?
+
+  event   Event?  @relation(fields: [eventId], references: [id])
+  eventId String?
 }

@@ -5,12 +5,5 @@
 html,
 body,
 #__next {
-  @apply h-dvh scroll-smooth bg-palette-ivory font-sans text-gray-900 antialiased;
-}
-
-@layer base {
-  :root {
-
-    --radius: 0.5rem
-  }
+  @apply h-dvh scroll-smooth bg-fixed bg-gradient-to-tr from-white via-palette-ivory to-palette-cream font-sans text-gray-800 antialiased;
 }
