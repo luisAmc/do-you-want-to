@@ -6,6 +6,7 @@ import { Page } from "../shared/Page";
 import { RSVPButtons } from "./RSVPButtons";
 import { type getServerSideProps as ViewEventServerSideProps } from "~/pages/[eventId]";
 import { type ReactNode, useEffect, useState } from "react";
+import { NextSeo } from "next-seo";
 
 export function ViewEvent(
   props: InferGetServerSidePropsType<typeof ViewEventServerSideProps>
@@ -32,6 +33,25 @@ export function ViewEvent(
 
   return (
     <Page>
+      <NextSeo
+        title={event?.title}
+        description={`RSVP to ${event?.title}`}
+        openGraph={{
+          type: "website",
+          url: `doyouwantto.inhousesoftware.io/${event?.id}`,
+          title: event?.title,
+          description: `RSVP to ${event?.title}`,
+          images: [
+            {
+              url: event?.imgSrc ?? "",
+              width: 400,
+              height: 400,
+              alt: "event image",
+            },
+          ],
+        }}
+      />
+
       {isLoading && <div>Cargando...</div>}
 
       {event && (
@@ -54,7 +74,7 @@ export function ViewEvent(
             <HostedBy hostedBy={event.hostedBy} />
 
             <Place place={event.place} />
-            
+
             <Description description={event.description} />
 
             {!hasParticipated && (
